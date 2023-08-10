@@ -7,7 +7,7 @@ function App() {
   const [testData, setTestData] = useState(null);
 
   useEffect(() => {
-    fetch("foo_compressed.json.gz")
+    fetch("foo_compressed.json.gzip")
       .then((response) => response.arrayBuffer())
       .then((buffer) => {
         // Decompress the data using pako
