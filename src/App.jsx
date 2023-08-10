@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import pako from 'pako';
 
 import "./App.css";
 
@@ -7,7 +8,12 @@ function App() {
 
   useEffect(() => {
     fetch("foo_compressed.json.gz")
-      .then((response) => response.json())
+      .then((response) => response.arrayBuffer())
+      .then((buffer) => {
+        // Decompress the data using pako
+        const decompressedData = pako.inflate(new Uint8Array(buffer), { to: 'string' });
+        return JSON.parse(decompressedData);
+      })
       .then((data) => setTestData(data))
       .catch((error) => console.error("There was an error!", error));
   }, []);
